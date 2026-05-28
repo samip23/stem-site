@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stem — Connecting talent to growth</title>
+<meta name="description" content="Stem is a swipe-to-match app connecting people with companies for short-term contract and gig work. Swipe, match, chat, and start working.">
+<meta property="og:title" content="Stem — Connecting talent to growth">
+<meta property="og:description" content="Swipe to match with short-term contract and gig work. Talent and companies, connected.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E1A;
+    --bg2: #0B1120;
+    --surface: #131A2A;
+    --surface2: #19223680;
+    --border: #1E2A40;
+    --text: #EAF0F8;
+    --muted: #8B98AE;
+    --green: #2BD46A;
+    --green2: #16A34A;
+    --green-glow: rgba(43,212,106,.16);
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --maxw: 1180px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* atmosphere: layered green glows + grain */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(900px 600px at 78% -8%, var(--green-glow), transparent 60%),
+      radial-gradient(700px 700px at -10% 25%, rgba(22,163,74,.10), transparent 55%),
+      radial-gradient(800px 500px at 50% 115%, rgba(43,212,106,.08), transparent 60%);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap { position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  /* scroll progress — a thin growing stem at the very left edge */
+  #progress { position: fixed; left: 0; top: 0; width: 3px; height: 100%; z-index: 50; background: linear-gradient(180deg, var(--green), var(--green2)); transform: scaleY(0); transform-origin: top; transition: transform .1s linear; box-shadow: 0 0 16px var(--green-glow); }
+
+  /* ---- nav ---- */
+  nav { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .leaf-mark { width: 34px; height: 34px; flex: none; }
+  .brand b { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -.01em; }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .pill { border: 1px solid var(--border); color: var(--green); border-radius: 999px; padding: 7px 15px; font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: rgba(43,212,106,.06); }
+
+  /* ---- hero ---- */
+  .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; padding: 70px 0 110px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 26px; }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.4; transform:scale(.7);} }
+
+  h1 { font-family: var(--display); font-weight: 500; font-size: clamp(46px, 7vw, 86px); line-height: .98; letter-spacing: -.025em; margin-bottom: 24px; }
+  h1 em { font-style: italic; color: var(--green); font-weight: 500; }
+  h1 .sprout { font-weight: 600; }
+  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 30ch; margin-bottom: 36px; }
+  .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .badge-soon { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--green), var(--green2)); color: #04140A; font-weight: 700; padding: 14px 24px; border-radius: 12px; font-size: 15px; box-shadow: 0 14px 40px -12px var(--green); }
+  .stores { color: var(--muted); font-size: 14px; }
+  .stores b { color: var(--text); font-weight: 600; }
+
+  /* hero visual: swipe card stack */
+  .stage { position: relative; height: 420px; display: flex; align-items: center; justify-content: center; }
+  .card { position: absolute; width: 270px; border-radius: 22px; padding: 22px; background: linear-gradient(165deg, #182236, #10172690); border: 1px solid var(--border); box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); backdrop-filter: blur(6px); }
+  .card.back2 { transform: rotate(-9deg) translateY(18px) scale(.9); opacity: .45; }
+  .card.back1 { transform: rotate(6deg) translateY(8px) scale(.95); opacity: .7; }
+  .card.front { transform: rotate(-3deg); animation: sway 7s ease-in-out infinite; }
+  @keyframes sway { 0%,100%{ transform: rotate(-3deg) translateY(0);} 50%{ transform: rotate(-1.5deg) translateY(-12px);} }
+  .card .ava { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--green), var(--green2)); display:flex; align-items:center; justify-content:center; color:#04140A; font-weight:800; font-size:20px; margin-bottom: 16px; }
+  .card .nm { font-family: var(--display); font-size: 21px; font-weight: 600; }
+  .card .rl { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-size: 12px; font-weight: 600; color: var(--green); background: rgba(43,212,106,.10); border: 1px solid rgba(43,212,106,.22); padding: 5px 10px; border-radius: 8px; }
+  .match-burst { position: absolute; top: -6px; right: 8px; z-index: 5; background: linear-gradient(135deg, var(--green), var(--green2)); color: #04140A; font-weight: 800; font-size: 13px; letter-spacing: .03em; padding: 9px 16px; border-radius: 999px; box-shadow: 0 12px 30px -8px var(--green); transform: rotate(7deg); animation: popIn .7s .9s both cubic-bezier(.2,1.4,.4,1); }
+  @keyframes popIn { from{ opacity:0; transform: rotate(7deg) scale(.4);} to{ opacity:1; transform: rotate(7deg) scale(1);} }
+
+  /* ---- section scaffolding ---- */
+  section { position: relative; z-index: 2; padding: 96px 0; }
+  .sec-head { max-width: 620px; margin-bottom: 64px; }
+  .label { color: var(--green); font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 18px; }
+  h2 { font-family: var(--display); font-weight: 500; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.04; letter-spacing: -.02em; }
+  h2 em { font-style: italic; color: var(--green); }
+  .sec-head p { color: var(--muted); margin-top: 18px; font-size: 18px; }
+
+  /* ---- how it works: the growing stem ---- */
+  .steps { position: relative; padding-left: 64px; }
+  .vine { position: absolute; left: 22px; top: 8px; bottom: 8px; width: 2px; background: var(--border); overflow: hidden; }
+  .vine i { position: absolute; inset: 0; background: linear-gradient(180deg, var(--green), var(--green2)); transform: scaleY(var(--grow, 0)); transform-origin: top; transition: transform .15s linear; }
+  .step { position: relative; padding: 22px 0 46px; opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s; }
+  .step.in { opacity: 1; transform: none; }
+  .node { position: absolute; left: -53px; top: 24px; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); display:flex; align-items:center; justify-content:center; transition: border-color .4s, box-shadow .4s; }
+  .node::after { content:""; width: 9px; height: 9px; border-radius: 50%; background: var(--border); transition: background .4s; }
+  .step.in .node { border-color: var(--green); box-shadow: 0 0 0 5px rgba(43,212,106,.10); }
+  .step.in .node::after { background: var(--green); }
+  .step .n { font-family: var(--display); font-size: 14px; color: var(--green); letter-spacing: .1em; margin-bottom: 8px; }
+  .step h3 { font-family: var(--display); font-size: 26px; font-weight: 600; margin-bottom: 8px; letter-spacing: -.01em; }
+  .step p { color: var(--muted); max-width: 52ch; }
+
+  /* ---- two-sided ---- */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .panel { position: relative; border: 1px solid var(--border); border-radius: 22px; padding: 38px 34px; background: linear-gradient(180deg, var(--surface), #0E1626); overflow: hidden; opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s; }
+  .panel.in { opacity: 1; transform: none; }
+  .panel:nth-child(2) { transition-delay: .12s; }
+  .panel::before { content:""; position:absolute; inset:0; background: radial-gradient(420px 200px at 80% -20%, var(--green-glow), transparent 70%); opacity:.7; }
+  .panel > * { position: relative; }
+  .panel .ico { width: 46px; height: 46px; margin-bottom: 22px; }
+  .panel h3 { font-family: var(--display); font-size: 28px; font-weight: 600; margin-bottom: 14px; }
+  .panel ul { list-style: none; }
+  .panel li { display: flex; gap: 12px; padding: 11px 0; border-top: 1px solid var(--border); color: var(--text); font-size: 15.5px; }
+  .panel li:first-of-type { border-top: none; }
+  .panel li svg { flex: none; margin-top: 3px; }
+
+  /* ---- closing ---- */
+  .closing { text-align: center; padding: 110px 0 90px; }
+  .closing h2 { margin: 0 auto 26px; max-width: 16ch; }
+  .closing .badge-soon { margin: 0 auto; }
+
+  /* ---- footer ---- */
+  footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 46px 0 60px; }
+  .foot-grid { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .foot-grid .tag-line { color: var(--muted); font-size: 14px; }
+  .foot-links { display: flex; gap: 26px; }
+  .foot-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+  .foot-links a:hover { color: var(--green); }
+  .copy { color: #56627A; font-size: 13px; margin-top: 26px; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 10px; padding: 40px 0 80px; }
+    .stage { height: 360px; order: -1; margin-bottom: 10px; }
+    .nav-links a:not(.pill) { display: none; }
+    .duo { grid-template-columns: 1fr; }
+    section { padding: 70px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .step, .panel { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+  <nav>
+    <div class="brand">
+      <svg class="leaf-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect width="48" height="48" rx="12" fill="#131A2A"/>
+        <path d="M20 36c-1-9 2-15 8-19" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M24 30c5 1 9-1 11-7 1-3 1-6 1-8-3 0-6 0-9 2-4 2.5-5 7-4 13z" stroke="#2BD46A" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>
+      <b>Stem</b>
+    </div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#who">Who it's for</a>
+      <span class="pill">Coming soon</span>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span>Launching soon</span>
+      <h1>Where <em>talent</em><br>takes <span class="sprout">root.</span></h1>
+      <p class="lede">Stem is a swipe-to-match app that connects people with companies for short-term contract and gig work.</p>
+      <div class="cta-row">
+        <span class="badge-soon">🌱 Coming soon</span>
+        <span class="stores">Soon on <b>iOS</b> &amp; <b>Android</b></span>
+      </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="card back2">
+        <div class="ava">N</div><div class="nm">Nadia R.</div><div class="rl">Brand Designer</div>
+        <div class="tags"><span class="tag">Figma</span><span class="tag">Branding</span></div>
+      </div>
+      <div class="card back1">
+        <div class="ava">C</div><div class="nm">Cobalt Studio</div><div class="rl">Hiring · 2-week sprint</div>
+        <div class="tags"><span class="tag">Remote</span><span class="tag">Design</span></div>
+      </div>
+      <div class="card front">
+        <span class="match-burst">✦ It's a match</span>
+        <div class="ava">J</div><div class="nm">Jordan M.</div><div class="rl">Full-stack Engineer</div>
+        <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">4-wk contract</span></div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">How it works</div>
+      <h2>From a swipe to a <em>start date.</em></h2>
+      <p>No applications, no inbox black holes. Just a clear path from interest to working together.</p>
+    </div>
+    <div class="steps">
+      <div class="vine"><i></i></div>
+
+      <div class="step">
+        <div class="node"></div>
+        <div class="n">01</div>
+        <h3>Swipe</h3>
+        <p>Candidates browse roles; companies browse talent. One gesture says "I'm interested" — the rest stays out of your way.</p>
+      </div>
+      <div class="step">
+        <div class="node"></div>
+        <div class="n">02</div>
+        <h3>Match</h3>
+        <p>When interest is mutual, it's a match. Both sides opted in, so every conversation starts on equal footing.</p>
+      </div>
+      <div class="step">
+        <div class="node"></div>
+        <div class="n">03</div>
+        <h3>Chat &amp; schedule</h3>
+        <p>Message in real time, share details, and lock in an interview slot — all inside the app.</p>
+      </div>
+      <div class="step">
+        <div class="node"></div>
+        <div class="n">04</div>
+        <h3>Start working</h3>
+        <p>Send the offer, accept, and kick off the contract. Short-term work, sorted in days, not weeks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">Who it's for</div>
+      <h2>Two sides, <em>one match.</em></h2>
+    </div>
+    <div class="duo">
+      <div class="panel">
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="16" r="8" stroke="#2BD46A" stroke-width="2.4"/><path d="M10 40c0-7 6-12 14-12s14 5 14 12" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <h3>For talent</h3>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Find short-term gigs that fit your skills and rate</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Only talk to companies who already want you</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Set your availability and let work come to you</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="9" y="14" width="30" height="24" rx="3" stroke="#2BD46A" stroke-width="2.4"/><path d="M18 14v-3a3 3 0 013-3h6a3 3 0 013 3v3" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <h3>For companies</h3>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Fill contract roles in days with pre-interested talent</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Swipe through candidates matched to each role</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Chat, interview, and make offers in one place</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="label" style="text-align:center">The wait is almost over</div>
+    <h2>Good work should be <em>easy to find.</em></h2>
+    <span class="badge-soon">🌱 Coming soon to iOS &amp; Android</span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand">
+        <svg class="leaf-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect width="48" height="48" rx="12" fill="#131A2A"/>
+          <path d="M20 36c-1-9 2-15 8-19" stroke="#2BD46A" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M24 30c5 1 9-1 11-7 1-3 1-6 1-8-3 0-6 0-9 2-4 2.5-5 7-4 13z" stroke="#2BD46A" stroke-width="2.2" stroke-linejoin="round"/>
+        </svg>
+        <b>Stem</b>
+      </div>
+      <span class="tag-line">Connecting talent to growth.</span>
+      <div class="foot-links">
+        <a href="https://samip23.github.io/stem-legal/privacy.html">Privacy</a>
+        <a href="https://samip23.github.io/stem-legal/terms.html">Terms</a>
+        <a href="mailto:ip.sam23@gmail.com">Contact</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 Stem. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress bar (the edge "stem")
+  const prog = document.getElementById('progress');
+  // Reveal-on-scroll for steps and panels
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.step, .panel').forEach((el) => io.observe(el));
+
+  // Grow the "how it works" vine in sync with scroll through that section
+  const stepsEl = document.querySelector('.steps');
+  const vineFill = document.querySelector('.vine i');
+  function onScroll() {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    prog.style.transform = `scaleY(${max > 0 ? h.scrollTop / max : 0})`;
+
+    if (stepsEl && vineFill) {
+      const r = stepsEl.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0 when section top reaches mid-screen, 1 when section bottom passes mid-screen
+      const grow = Math.min(1, Math.max(0, (vh * 0.55 - r.top) / r.height));
+      vineFill.style.transform = `scaleY(${grow})`;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+</script>
+</body>
+</html>
