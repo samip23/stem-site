@@ -118,6 +118,58 @@
   .step h3 { font-family: var(--display); font-size: 26px; font-weight: 600; margin-bottom: 8px; letter-spacing: -.01em; }
   .step p { color: var(--muted); max-width: 52ch; }
 
+  /* ---- phone demo (How it works) ---- */
+  .how-grid { display: grid; grid-template-columns: 322px 1fr; gap: 66px; align-items: start; }
+  .phone-col { position: sticky; top: 104px; }
+  .phone { width: 300px; margin: 0 auto; aspect-ratio: 300 / 616; background: #04060C; border: 1px solid #2A374D; border-radius: 46px; padding: 13px; position: relative; box-shadow: 0 60px 110px -42px rgba(0,0,0,.92), inset 0 1px 0 rgba(255,255,255,.05); }
+  .screen-wrap { position: relative; width: 100%; height: 100%; border-radius: 34px; overflow: hidden; background: radial-gradient(120% 80% at 50% 0%, #101a2c, #090e19); }
+  .notch { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 84px; height: 19px; background: #04060C; border-radius: 0 0 13px 13px; z-index: 20; }
+  .statusbar { position:absolute; top:0; left:0; right:0; height:34px; display:flex; align-items:center; justify-content:space-between; padding: 0 22px; font-size: 11px; font-weight:700; color:#C7D2E0; z-index:15; }
+  .statusbar .dots { display:flex; gap:3px; } .statusbar .dots span { width:5px; height:5px; border-radius:50%; background:#2BD46A; }
+  .screen { position:absolute; inset:0; padding: 44px 14px 16px; opacity:0; transform: scale(.97) translateY(8px); transition: opacity .55s ease, transform .55s ease; pointer-events:none; }
+  .screen.on { opacity:1; transform:none; }
+
+  .swipe-card { height:100%; border-radius:24px; background:linear-gradient(170deg,#1a2438,#111a2b); border:1px solid #2a374d; padding:20px; display:flex; flex-direction:column; position:relative; overflow:hidden; animation: nudge 3.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,70%,100%{transform:translateX(0) rotate(0);} 82%{transform:translateX(20px) rotate(4deg);} 92%{transform:translateX(0) rotate(0);} }
+  .swipe-card .pp { width:64px; height:64px; border-radius:18px; background:linear-gradient(135deg,#2BD46A,#16A34A); display:flex; align-items:center; justify-content:center; color:#04140A; font-weight:800; font-size:26px; margin-bottom:16px; }
+  .swipe-card .pn { font-family:var(--display); font-size:23px; font-weight:600; }
+  .swipe-card .pr { color:var(--muted); font-size:13px; margin-bottom:14px; }
+  .swipe-card .pt { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
+  .swipe-card .pt span { font-size:11px; font-weight:600; color:var(--green); background:rgba(43,212,106,.1); border:1px solid rgba(43,212,106,.22); padding:4px 9px; border-radius:7px; }
+  .stamp { position:absolute; top:18px; right:14px; border:2.5px solid var(--green); color:var(--green); font-weight:800; font-size:12px; letter-spacing:.06em; padding:5px 10px; border-radius:9px; transform:rotate(12deg); opacity:0; animation: stampIn 3.6s ease-in-out infinite; }
+  @keyframes stampIn { 0%,74%,100%{opacity:0;} 84%,94%{opacity:1;} }
+
+  .match-s { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:14px; }
+  .match-s .avs { display:flex; }
+  .match-s .avs i { width:62px; height:62px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:23px; border:3px solid #0a0e19; }
+  .match-s .avs i:first-child { background:linear-gradient(135deg,#2BD46A,#16A34A); color:#04140A; }
+  .match-s .avs i:last-child { background:linear-gradient(135deg,#3b82f6,#6366f1); color:#fff; margin-left:-18px; }
+  .match-s h4 { font-family:var(--display); font-size:25px; font-weight:600; color:var(--green); }
+  .match-s p { color:var(--muted); font-size:13px; max-width:22ch; }
+  .match-s .btn { margin-top:4px; background:linear-gradient(135deg,#2BD46A,#16A34A); color:#04140A; font-weight:700; font-size:13px; padding:10px 22px; border-radius:10px; }
+
+  .chat-top { display:flex; align-items:center; gap:10px; padding-bottom:13px; border-bottom:1px solid #1e2a40; margin-bottom:14px; }
+  .chat-top i { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#3b82f6,#6366f1); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px; }
+  .chat-top b { font-family:var(--display); font-size:15px; font-weight:600; }
+  .bub { max-width:80%; padding:9px 13px; border-radius:14px; font-size:12.5px; margin-bottom:9px; line-height:1.4; }
+  .bub.inc { background:#1a2336; color:#dbe4f0; border-bottom-left-radius:4px; }
+  .bub.out { background:linear-gradient(135deg,#2BD46A,#16A34A); color:#04140A; font-weight:500; margin-left:auto; border-bottom-right-radius:4px; }
+  .typing { display:inline-flex; gap:4px; background:#1a2336; padding:11px 14px; border-radius:14px; border-bottom-left-radius:4px; }
+  .typing span { width:6px; height:6px; border-radius:50%; background:#5b6678; animation: blink 1.2s infinite; }
+  .typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes blink { 0%,60%,100%{opacity:.3; transform:translateY(0);} 30%{opacity:1; transform:translateY(-3px);} }
+
+  .offer-s { height:100%; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+  .offer-card { background:linear-gradient(170deg,#16223a,#101a2b); border:1px solid #2a374d; border-radius:20px; padding:20px; }
+  .offer-card .lbl { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .offer-card .role { font-family:var(--display); font-size:20px; font-weight:600; margin-bottom:3px; }
+  .offer-card .meta { color:var(--muted); font-size:13px; margin-bottom:14px; }
+  .offer-card .row { display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-top:1px solid #1e2a40; font-size:13px; color:var(--muted); }
+  .offer-card .row b { color:#fff; font-weight:600; }
+  .accepted { display:flex; align-items:center; justify-content:center; gap:8px; background:rgba(43,212,106,.12); border:1px solid rgba(43,212,106,.3); color:var(--green); font-weight:700; padding:12px; border-radius:12px; font-size:14px; }
+
+  .step.active h3 { color: var(--green); transition: color .4s; }
+
   /* ---- two-sided ---- */
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .panel { position: relative; border: 1px solid var(--border); border-radius: 22px; padding: 38px 34px; background: linear-gradient(180deg, var(--surface), #0E1626); overflow: hidden; opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s; }
@@ -151,6 +203,8 @@
     .stage { height: 360px; order: -1; margin-bottom: 10px; }
     .nav-links a:not(.pill) { display: none; }
     .duo { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; gap: 30px; }
+    .phone-col { position: static; }
     section { padding: 70px 0; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -214,32 +268,85 @@
       <h2>From a swipe to a <em>start date.</em></h2>
       <p>No applications, no inbox black holes. Just a clear path from interest to working together.</p>
     </div>
-    <div class="steps">
-      <div class="vine"><i></i></div>
+    <div class="how-grid">
+      <div class="phone-col">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen-wrap">
+            <div class="statusbar"><span>9:41</span><span class="dots"><span></span><span></span><span></span></span></div>
 
-      <div class="step">
-        <div class="node"></div>
-        <div class="n">01</div>
-        <h3>Swipe</h3>
-        <p>Candidates browse roles; companies browse talent. One gesture says "I'm interested" — the rest stays out of your way.</p>
+            <div class="screen on" data-s="1">
+              <div class="swipe-card">
+                <span class="stamp">✓ INTERESTED</span>
+                <div class="pp">N</div>
+                <div class="pn">Nadia R.</div>
+                <div class="pr">Brand &amp; Product Designer · Remote</div>
+                <div class="pt"><span>Figma</span><span>Branding</span><span>UI/UX</span><span>2-wk sprint</span></div>
+              </div>
+            </div>
+
+            <div class="screen" data-s="2">
+              <div class="match-s">
+                <div class="avs"><i>N</i><i>C</i></div>
+                <h4>It's a match!</h4>
+                <p>You and Cobalt Studio liked each other.</p>
+                <div class="btn">Say hello →</div>
+              </div>
+            </div>
+
+            <div class="screen" data-s="3">
+              <div class="chat-top"><i>C</i><b>Cobalt Studio</b></div>
+              <div class="bub inc">Hi Nadia! Loved your portfolio 👏</div>
+              <div class="bub out">Thank you! The sprint sounds perfect.</div>
+              <div class="bub inc">Free for a quick call Thursday?</div>
+              <div class="typing"><span></span><span></span><span></span></div>
+            </div>
+
+            <div class="screen" data-s="4">
+              <div class="offer-s">
+                <div class="offer-card">
+                  <div class="lbl">Contract offer</div>
+                  <div class="role">Brand Designer</div>
+                  <div class="meta">Cobalt Studio</div>
+                  <div class="row"><span>Rate</span><b>$85 / hr</b></div>
+                  <div class="row"><span>Length</span><b>2 weeks</b></div>
+                  <div class="row"><span>Starts</span><b>Mon, Jun 1</b></div>
+                </div>
+                <div class="accepted">✓ Offer accepted</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div class="step">
-        <div class="node"></div>
-        <div class="n">02</div>
-        <h3>Match</h3>
-        <p>When interest is mutual, it's a match. Both sides opted in, so every conversation starts on equal footing.</p>
-      </div>
-      <div class="step">
-        <div class="node"></div>
-        <div class="n">03</div>
-        <h3>Chat &amp; schedule</h3>
-        <p>Message in real time, share details, and lock in an interview slot — all inside the app.</p>
-      </div>
-      <div class="step">
-        <div class="node"></div>
-        <div class="n">04</div>
-        <h3>Start working</h3>
-        <p>Send the offer, accept, and kick off the contract. Short-term work, sorted in days, not weeks.</p>
+
+      <div class="steps">
+        <div class="vine"><i></i></div>
+
+        <div class="step" data-screen="1">
+          <div class="node"></div>
+          <div class="n">01</div>
+          <h3>Swipe</h3>
+          <p>Candidates browse roles; companies browse talent. One gesture says "I'm interested" — the rest stays out of your way.</p>
+        </div>
+        <div class="step" data-screen="2">
+          <div class="node"></div>
+          <div class="n">02</div>
+          <h3>Match</h3>
+          <p>When interest is mutual, it's a match. Both sides opted in, so every conversation starts on equal footing.</p>
+        </div>
+        <div class="step" data-screen="3">
+          <div class="node"></div>
+          <div class="n">03</div>
+          <h3>Chat &amp; schedule</h3>
+          <p>Message in real time, share details, and lock in an interview slot — all inside the app.</p>
+        </div>
+        <div class="step" data-screen="4">
+          <div class="node"></div>
+          <div class="n">04</div>
+          <h3>Start working</h3>
+          <p>Send the offer, accept, and kick off the contract. Short-term work, sorted in days, not weeks.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -332,6 +439,34 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   onScroll();
+
+  // Phone demo: advance the screen as each step becomes active (desktop),
+  // or auto-cycle on a timer (mobile, where the phone isn't sticky).
+  const screens = document.querySelectorAll('.screen');
+  const stepEls = document.querySelectorAll('.step[data-screen]');
+  function setScreen(n) {
+    screens.forEach((s, i) => s.classList.toggle('on', i === n));
+    stepEls.forEach((st, i) => st.classList.toggle('active', i === n));
+  }
+  const desktop = window.matchMedia('(min-width: 861px)');
+  let cycleTimer = null;
+  function setupDemo() {
+    if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+    setScreen(0);
+    if (desktop.matches) {
+      const center = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setScreen(Number(e.target.dataset.screen) - 1);
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      stepEls.forEach((st) => center.observe(st));
+    } else {
+      let i = 0;
+      cycleTimer = setInterval(() => { i = (i + 1) % screens.length; setScreen(i); }, 2400);
+    }
+  }
+  setupDemo();
+  if (desktop.addEventListener) desktop.addEventListener('change', setupDemo);
 </script>
 </body>
 </html>
