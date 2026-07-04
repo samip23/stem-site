@@ -211,6 +211,74 @@
     * { animation: none !important; transition: none !important; }
     .step, .panel { opacity: 1; transform: none; }
   }
+  @media (max-width: 720px) {
+    .wl-card { padding: 40px 24px !important; border-radius: 20px !important; }
+    .wl-side { grid-template-columns: 1fr !important; }
+    .wl-row { flex-direction: column !important; }
+  }
+
+  /* ---- waitlist ---- */
+  .waitlist { padding: 96px 0; }
+  .wl-card {
+    max-width: 720px; margin: 0 auto;
+    background: linear-gradient(180deg, rgba(28, 36, 52, .6) 0%, rgba(20, 26, 40, .55) 100%);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 24px;
+    padding: 56px 48px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .wl-card h2 { text-align: center; margin-bottom: 12px; }
+  .wl-sub { text-align: center; color: var(--muted); margin: 0 auto 32px; font-size: 17px; max-width: 500px; }
+
+  .wl-form { display: flex; flex-direction: column; gap: 16px; }
+  .wl-side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .wl-choice {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 18px; border: 1px solid rgba(255,255,255,.08); border-radius: 14px;
+    cursor: pointer; background: rgba(20, 26, 40, .3);
+    transition: border-color .18s, background .18s;
+  }
+  .wl-choice:hover { border-color: rgba(43, 212, 106, .35); }
+  .wl-choice input[type="radio"] {
+    appearance: none; -webkit-appearance: none;
+    width: 20px; height: 20px; border: 2px solid rgba(255,255,255,.2); border-radius: 50%;
+    margin: 2px 0 0; flex-shrink: 0; position: relative;
+    transition: border-color .18s;
+  }
+  .wl-choice input[type="radio"]:checked { border-color: var(--green); }
+  .wl-choice input[type="radio"]:checked::after {
+    content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--green);
+  }
+  .wl-choice:has(input:checked) { border-color: var(--green); background: rgba(43, 212, 106, .07); }
+  .wl-choice b { font-family: var(--display); font-size: 16px; font-weight: 600; display: block; margin-bottom: 3px; letter-spacing: -.01em; }
+  .wl-choice span { color: var(--muted); font-size: 13px; line-height: 1.4; display: block; }
+
+  .wl-row { display: flex; gap: 10px; }
+  #wl-email {
+    flex: 1; padding: 15px 18px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(10, 14, 26, .5); color: var(--text);
+    font-family: var(--body); font-size: 16px; outline: none;
+    transition: border-color .18s;
+  }
+  #wl-email:focus { border-color: var(--green); }
+  #wl-email::placeholder { color: rgba(148, 163, 184, .55); }
+  #wl-submit {
+    padding: 15px 28px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, #2BD46A, #16A34A);
+    color: #04140A; font-family: var(--body); font-weight: 700; font-size: 16px;
+    cursor: pointer; white-space: nowrap;
+    transition: transform .18s, box-shadow .18s;
+  }
+  #wl-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 30px -8px rgba(43,212,106,.4); }
+  #wl-submit:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .wl-msg { min-height: 20px; text-align: center; font-size: 14px; margin-top: 4px; }
+  .wl-msg.ok { color: var(--green); font-weight: 500; }
+  .wl-msg.err { color: #FCA5A5; }
+  .wl-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
+  .waitlist.done .wl-form { opacity: .55; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -381,11 +449,39 @@
   </div>
 </section>
 
-<section class="closing">
+<section id="waitlist" class="waitlist">
   <div class="wrap">
-    <div class="label" style="text-align:center">The wait is almost over</div>
-    <h2>Good work should be <em>easy to find.</em></h2>
-    <span class="badge-soon">🌱 Coming soon to iOS &amp; Android</span>
+    <div class="wl-card">
+      <div class="label" style="text-align:center">The wait is almost over</div>
+      <h2>Be first to <em>swipe.</em></h2>
+      <p class="wl-sub">Stem is launching soon. Tell us which side you're on — we'll email you the moment it's live in your app store.</p>
+
+      <form id="wl-form" class="wl-form" novalidate>
+        <div class="wl-side">
+          <label class="wl-choice">
+            <input type="radio" name="kind" value="CANDIDATE" checked>
+            <div>
+              <b>I'm looking for contract work</b>
+              <span>Designer, engineer, marketer, or anywhere in between.</span>
+            </div>
+          </label>
+          <label class="wl-choice">
+            <input type="radio" name="kind" value="COMPANY">
+            <div>
+              <b>I'm hiring contractors</b>
+              <span>Startup, agency, or team hiring short-term help.</span>
+            </div>
+          </label>
+        </div>
+        <div class="wl-row">
+          <input type="email" id="wl-email" name="email" required autocomplete="email" placeholder="you@company.com" aria-label="Email address">
+          <button type="submit" id="wl-submit">Join the waitlist</button>
+        </div>
+        <div id="wl-msg" class="wl-msg" aria-live="polite"></div>
+      </form>
+
+      <p class="wl-note">No spam. Just one email when we launch. 🌱</p>
+    </div>
   </div>
 </section>
 
@@ -467,6 +563,44 @@
   }
   setupDemo();
   if (desktop.addEventListener) desktop.addEventListener('change', setupDemo);
+
+  // ---- Waitlist submission ----
+  const wlForm = document.getElementById('wl-form');
+  if (wlForm) {
+    const wlEmail = document.getElementById('wl-email');
+    const wlSubmit = document.getElementById('wl-submit');
+    const wlMsg = document.getElementById('wl-msg');
+    const wlSection = document.querySelector('.waitlist');
+    wlForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (wlEmail.value || '').trim();
+      const kind = wlForm.querySelector('input[name="kind"]:checked')?.value || 'CANDIDATE';
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        wlMsg.textContent = 'Enter a valid email.';
+        wlMsg.className = 'wl-msg err';
+        return;
+      }
+      wlSubmit.disabled = true;
+      wlMsg.textContent = 'Adding you…';
+      wlMsg.className = 'wl-msg';
+      try {
+        const res = await fetch('https://api.stem-engage.com/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, kind }),
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        wlMsg.textContent = "🌱 You're on the list. Watch your inbox.";
+        wlMsg.className = 'wl-msg ok';
+        wlSection.classList.add('done');
+        wlSubmit.textContent = 'Joined ✓';
+      } catch (err) {
+        wlMsg.textContent = 'Something went wrong. Try again in a moment.';
+        wlMsg.className = 'wl-msg err';
+        wlSubmit.disabled = false;
+      }
+    });
+  }
 </script>
 </body>
 </html>
