@@ -280,6 +280,27 @@
   .wl-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
   .waitlist.done .wl-form { opacity: .55; pointer-events: none; }
 </style>
+<!-- ── Meta Pixel ─────────────────────────────────────────────────
+     Tracks page views + Lead events (waitlist signups) so Meta Ads
+     Manager can optimize toward conversions. Get your ID from:
+       Meta Events Manager → Data sources → your pixel → ID
+     Then replace PIXEL_ID_PLACEHOLDER below (two occurrences). -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'PIXEL_ID_PLACEHOLDER');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=PIXEL_ID_PLACEHOLDER&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 <div id="progress"></div>
@@ -594,6 +615,14 @@
         wlMsg.className = 'wl-msg ok';
         wlSection.classList.add('done');
         wlSubmit.textContent = 'Joined ✓';
+        // Meta Pixel conversion — segmented by side so ad sets can be
+        // measured against the audience they were built for.
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'Lead', {
+            content_name: 'waitlist_signup',
+            content_category: kind,
+          });
+        }
       } catch (err) {
         wlMsg.textContent = 'Something went wrong. Try again in a moment.';
         wlMsg.className = 'wl-msg err';
